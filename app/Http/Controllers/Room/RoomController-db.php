@@ -5,13 +5,11 @@ namespace App\Http\Controllers\Room;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Models\Room;
-use App\Models\Supervisor;
 
 class RoomController extends Controller
 {
     public function create () {
-        $supervisors = Supervisor::get();
+        $supervisors = DB::table('supervisors')->get();
         return view('rooms.create')->with('supervisors', $supervisors);
     }
 
@@ -26,21 +24,10 @@ class RoomController extends Controller
 
         // $result = DB::insert($query);
 
-        // $result = Room::insert(['building' => $building_name, 
-        //                                         'number' => $room_number, 
-        //                                         'capacity' => $capacity,
-        //                                         'supervisor_id' => $supervisor_id]);
-
-        $room = new Room;
-        // $room->fill(['building' => $building_name, 
-        //             'number' => $room_number, 
-        //             'capacity' => $capacity,
-        //             'supervisor_id' => $supervisor_id]);
-        $room->building = $building_name;
-        $room->capacity = $capacity;
-        $room->number = $room_number;
-        $room->supervisor_id = $supervisor_id;
-        $room->save();
+        $result = DB::table('rooms')->insert(['building' => $building_name, 
+                                                'number' => $room_number, 
+                                                'capacity' => $capacity,
+                                                'supervisor_id' => $supervisor_id]);
 
         return redirect()->back();
     }
@@ -56,7 +43,8 @@ class RoomController extends Controller
 		table()
         */
 
-        $rooms = Room::select('*')
+        $rooms = DB::table('rooms')
+        		->select('*')
         		->get();
 
         return view('rooms.index')->with('rooms', $rooms);
@@ -89,21 +77,10 @@ class RoomController extends Controller
 		where()
         */
 
-        // $result = Room::where('id', '=', $id)
-		      //   ->update(['building' => $building_name, 'number' => $room_number, 'capacity' => $capacity]);
+        $result = DB::table('rooms')
+        		->where('id', '=', $id)
+		        ->update(['building' => $building_name, 'number' => $room_number, 'capacity' => $capacity]);
 
-		// $room = Room::where('id', $id)->first();
-		$room = Room::find($id);
-		// $room->fill(['building' => $building_name, 
-        //             'number' => $room_number, 
-        //             'capacity' => $capacity,
-        //             'supervisor_id' => $supervisor_id]);
-        $room->building = $building_name;
-        $room->capacity = $capacity;
-        $room->number = $room_number;
-        $room->supervisor_id = $supervisor_id;
-        $room->save();
-        
         return redirect()->back();
     }
 
@@ -120,7 +97,8 @@ class RoomController extends Controller
 		limit()
         */
 
-        $room = Room::select('*')
+        $room = DB::table('rooms')
+        		->select('*')
         		->where('id', $id)
         		->limit(1)
         		->first();
@@ -139,7 +117,8 @@ class RoomController extends Controller
 		where()
     	*/
 
-    	$result = Room::where('id', $id)
+    	$result = DB::table('rooms')
+    				->where('id', $id)
     				->delete();
     } 
 
