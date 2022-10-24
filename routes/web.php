@@ -65,3 +65,7 @@ Route::get('room', 'App\Http\Controllers\Room\RoomController@index');
 Route::post('room/update/{id}', 'App\Http\Controllers\Room\RoomController@update');
 
 Route::get('room/edit/{id}', 'App\Http\Controllers\Room\RoomController@edit');
+
+Route::post('room/delete/{id}', 'App\Http\Controllers\Room\RoomController@destroy');
+
+Route::post('room/restore/{id}', 'App\Http\Controllers\Room\RoomController@restore');

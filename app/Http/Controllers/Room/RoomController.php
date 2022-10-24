@@ -56,8 +56,28 @@ class RoomController extends Controller
 		table()
         */
 
-        $rooms = Room::select('*')
-        		->get();
+        /*
+        rooms.supervisor_id -> supervisors.id
+        */
+
+        // stdClass
+
+        // $rooms = Room::withTrashed()
+        //         ->leftJoin('supervisors', 'rooms.supervisor_id', 'supervisors.id')
+        //         ->select('rooms.*', 'supervisors.name as supervisor_name')
+        // 		->get();
+
+        $rooms = Room::withTrashed()->with('supervisor')->get();
+
+        // foreach ($rooms as $room) {
+        //     $supervisor_id = $room->supervisor_id;
+        //     $supervisor = Supervisor::find($supervisor_id);
+        //     $room->supervisor = $supervisor;
+        // }
+
+        dd($rooms);
+
+        // collection of Room objects
 
         return view('rooms.index')->with('rooms', $rooms);
     }
@@ -131,17 +151,17 @@ class RoomController extends Controller
     }
 
     public function destroy ($id) {
-    	// $query = "delete from rooms where id = $id";
-
-    	/*
-		delete()
-		table()
-		where()
-    	*/
-
     	$result = Room::where('id', $id)
     				->delete();
+        return redirect()->back();
     } 
+
+    public function restore ($id) {
+        $result = Room::where('id', $id)
+                    ->restore();
+        return redirect()->back();
+    }
+
 
     public function test () {
     	$query = "select * from rooms
