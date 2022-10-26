@@ -69,3 +69,10 @@ Route::get('room/edit/{id}', 'App\Http\Controllers\Room\RoomController@edit');
 Route::post('room/delete/{id}', 'App\Http\Controllers\Room\RoomController@destroy');
 
 Route::post('room/restore/{id}', 'App\Http\Controllers\Room\RoomController@restore');
+
+
+
+
+Route::get('supervisor', 'App\Http\Controllers\Supervisor\SupervisorController@index');
+
+Route::get('student/{student_id}/registed', 'App\Http\Controllers\StudentRegisterationController@show');

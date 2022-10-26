@@ -11,4 +11,9 @@ class Course extends Model
     use HasFactory;
     use SoftDeletes;
 
+    public function registered_courses () {
+        return $this->hasMany('App\Models\RegisteredCourse');
+    }
+
+    # Course 1-M RegisteredCourse
 }

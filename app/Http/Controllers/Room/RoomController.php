@@ -67,7 +67,7 @@ class RoomController extends Controller
         //         ->select('rooms.*', 'supervisors.name as supervisor_name')
         // 		->get();
 
-        $rooms = Room::withTrashed()->with('supervisor')->get();
+        $rooms = Room::withTrashed()->with(['supervisor', 'sector'])->get();
 
         // foreach ($rooms as $room) {
         //     $supervisor_id = $room->supervisor_id;
@@ -75,7 +75,7 @@ class RoomController extends Controller
         //     $room->supervisor = $supervisor;
         // }
 
-        dd($rooms);
+        // dd($rooms);
 
         // collection of Room objects
 

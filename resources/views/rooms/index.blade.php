@@ -12,6 +12,7 @@
 							<th>Number</th>
 							<th>Capacity</th>
 							<th>Supervisor</th>
+							<th>Sector</th>
 							<th>EDIT</th>
 							<th>DELETE</th>
 						</tr>
@@ -22,7 +23,8 @@
 								<td>{{ $room->building }}</td>
 								<td>{{ $room->number }}</td>
 								<td>{{ $room->capacity }}</td>
-								<td>{{ $room->supervisor->name }}</td>
+								<td>{{ $room->supervisor->name ?? null }}</td>
+								<td>{{ $room->sector->name ?? null }}</td>
 								<td><a href="{{ URL('room/edit/'.$room->id) }}">Edit</a></td>
 								<td>
 									@if ($room->deleted_at)

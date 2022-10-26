@@ -15,8 +15,13 @@ class Room extends Model
         return $this->belongsTo('App\Models\Supervisor'); // rooms.supervisor_id -> supervisors.id
     }
 
+    public function sector () {
+        return $this->belongsTo('App\Models\Sector');
+    }
 
-    // rooms: id, building, capacity, number, supervisor_id
+    // rooms: id, building, capacity, number, supervisor_id, sector_id
 
     // Room M-1 Supervisor
+
+    # Room M-1 Sector
 }

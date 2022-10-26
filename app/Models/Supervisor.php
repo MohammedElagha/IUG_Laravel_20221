@@ -10,4 +10,11 @@ class Supervisor extends Model
 {
     use HasFactory;
     use SoftDeletes;
+
+    public function rooms () {
+        return $this->hasMany('App\Models\Room');
+        # hasOne
+    }
+
+    # Supervisor 1-M Room
 }
