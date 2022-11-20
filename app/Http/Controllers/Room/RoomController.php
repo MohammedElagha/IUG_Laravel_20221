@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Room;
 use App\Models\Supervisor;
+use App\Http\Requests\RoomRequest;
+use Illuminate\Support\Facades\Storage;
 
 class RoomController extends Controller
 {
@@ -15,11 +17,22 @@ class RoomController extends Controller
         return view('rooms.create')->with('supervisors', $supervisors);
     }
 
-    public function store (Request $request) {
+    public function store (RoomRequest $request) {
         $building_name = $request->input('building');
-        $room_number = $request->input('number');
+        $room_number = $request->input('number');   
         $capacity = $request->input('capacity');
         $supervisor_id = $request->input('supervisor_id');
+
+        // $number = $request->input('number');
+        // $number = Request::get('number');   # Facade Class
+        $number = request('number');        # Helper Function
+
+        // if (!empty($building_name) && !empty($room_number)) {
+        //     if (is_string($building_name) && len($building_name) && is_integer($room_number)) {
+
+        //     }
+        // }
+
 
         // $query = "insert into rooms (building, number, capacity)
         //             values ('$building_name', $room_number, $capacity)";
@@ -31,6 +44,22 @@ class RoomController extends Controller
         //                                         'capacity' => $capacity,
         //                                         'supervisor_id' => $supervisor_id]);
 
+
+        # "001" . "oo" -> 001oo
+        # "001" + 2 -> 3
+
+        # 2022-05-11 15:55:00
+        # time()
+
+
+        $image = $request->file('image');
+        $image_name = time()+rand(0, 1000000000000) . '.' . $image->getClientOriginalExtension();
+        $path = 'uploads/images/' . $image_name;
+
+        Storage::disk('public')->put($path, file_get_contents($image));
+
+
+
         $room = new Room;
         // $room->fill(['building' => $building_name, 
         //             'number' => $room_number, 
@@ -40,6 +69,7 @@ class RoomController extends Controller
         $room->capacity = $capacity;
         $room->number = $room_number;
         $room->supervisor_id = $supervisor_id;
+        $room->image = $path;
         $room->save();
 
         return redirect()->back();
@@ -67,7 +97,11 @@ class RoomController extends Controller
         //         ->select('rooms.*', 'supervisors.name as supervisor_name')
         // 		->get();
 
-        $rooms = Room::withTrashed()->with(['supervisor', 'sector'])->get();
+        $rooms = Room::withTrashed()->with(['supervisor', 'sector'])->paginate(15);
+
+        foreach ($rooms as $room) {
+            $room->image_url = Storage::disk('public')->url($room->image);
+        }
 
         // foreach ($rooms as $room) {
         //     $supervisor_id = $room->supervisor_id;

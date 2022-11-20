@@ -8,6 +8,7 @@
 				<table class="table table-hover table-bordered">
 					<thead>
 						<tr>
+							<th>Image</th>
 							<th>Building</th>
 							<th>Number</th>
 							<th>Capacity</th>
@@ -20,6 +21,7 @@
 					<tbody>
 						@foreach ($rooms as $room)
 							<tr>
+								<td><img src="{{ $room->image_url }}" width="150px"></td>
 								<td>{{ $room->building }}</td>
 								<td>{{ $room->number }}</td>
 								<td>{{ $room->capacity }}</td>
@@ -43,6 +45,12 @@
 						@endforeach
 					</tbody>
 				</table>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-12">
+				{{ $rooms->links() }}
 			</div>
 		</div>
 

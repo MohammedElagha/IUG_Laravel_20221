@@ -9,6 +9,7 @@
 				<form action="{{ URL('room/update/' . $id) }}" method="POST">
 
 					@csrf
+					@method('PUT')
 
 					<div class="form-group">
 						<label>Building</label>

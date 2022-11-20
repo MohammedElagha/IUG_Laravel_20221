@@ -62,7 +62,7 @@ Route::post('room/store', 'App\Http\Controllers\Room\RoomController@store');
 
 Route::get('room', 'App\Http\Controllers\Room\RoomController@index');
 
-Route::post('room/update/{id}', 'App\Http\Controllers\Room\RoomController@update');
+Route::put('room/update/{id}', 'App\Http\Controllers\Room\RoomController@update');
 
 Route::get('room/edit/{id}', 'App\Http\Controllers\Room\RoomController@edit');
 
@@ -76,3 +76,16 @@ Route::post('room/restore/{id}', 'App\Http\Controllers\Room\RoomController@resto
 Route::get('supervisor', 'App\Http\Controllers\Supervisor\SupervisorController@index');
 
 Route::get('student/{student_id}/registed', 'App\Http\Controllers\StudentRegisterationController@show');
+
+
+
+
+
+
+##############
+
+
+// Route::get('student', 'StudentController@index');
+// Route::get('student/search', 'StudentController@search');
+// Route::get('student/{id}', 'StudentController@show');
+
